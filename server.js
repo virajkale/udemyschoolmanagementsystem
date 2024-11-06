@@ -2,7 +2,7 @@
 const dotenv = require("dotenv");
 
 dotenv.config({ path: "./config/custom.env" });
-
+const dbconnect = require("./config/dbConnect.js");
 const http = require("http");
 
 const app = require("./app/app");
