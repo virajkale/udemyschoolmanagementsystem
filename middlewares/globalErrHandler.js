@@ -6,13 +6,25 @@ const globalErrHandler = (err, req, res, next) => {
   const message = err.message;
   const status = err.status ? err.status : "failed";
   const statusCode = err.statusCode ? err.statusCode : 500;
-  res.status(statusCode).json({
-    status,
-    message,
-    stack,
-  });
-};
-
+//   res.status(statusCode).json({
+//     status,
+//     message,
+//     stack,
+//   });
+// };
+  if (process.env.NODE_MODE === "DEVELOPMENT") {
+    res.status(statusCode).json({
+      stack,
+      message,
+      status,
+    });
+  }
+  if (process.env.NODE_MODE === "PRODUCTION") {
+    res.status(statusCode).json({
+      message,
+      status,
+    });
+  }
 //Not found
 const notFoundErr = (req, res, next) => {
   const err = new Error(`Can't find ${req.originalUrl} on the server`);
